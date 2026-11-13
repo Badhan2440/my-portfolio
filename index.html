@@ -603,9 +603,9 @@ html.intro-on body{overflow:hidden}
 
   <div class="close-foot">
     <div class="socials">
-      <a class="pill" href="https://github.com/«your-handle»" target="_blank" rel="noopener" data-magnetic>GitHub
+      <a class="pill" href="https://github.com/Badhan2440" target="_blank" rel="noopener noreferrer" data-magnetic aria-label="GitHub profile (opens in a new tab)">GitHub
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="pill" href="https://linkedin.com/in/«your-handle»" target="_blank" rel="noopener" data-magnetic>LinkedIn
+      <a class="pill" href="https://www.linkedin.com/in/badhan-paul-048161190/" target="_blank" rel="noopener noreferrer" data-magnetic aria-label="LinkedIn profile (opens in a new tab)">LinkedIn
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <button class="pill up" id="toTop" type="button" data-magnetic>
@@ -1509,6 +1509,8 @@ var hist=PB.store.get('pb.termhist',[]),hi=hist.length,booted=false;
 function print(h){var d=doc.createElement('div');d.innerHTML=h;out.appendChild(d);out.scrollTop=out.scrollHeight;}
 function c(s){return '<span class="c">'+E(s)+'</span>';}
 function d(s){return '<span class="d">'+E(s)+'</span>';}
+var GITHUB='https://github.com/Badhan2440',LINKEDIN='https://www.linkedin.com/in/badhan-paul-048161190/';
+function ext(label,href){return '<a class="lnk" href="'+E(href)+'" target="_blank" rel="noopener noreferrer">'+E(label)+'</a>';}
 function lnk(label,cmd){return '<button type="button" class="lnk" data-cmd="'+E(cmd)+'">'+E(label)+'</button>';}
 function goAfter(sel,msg){print(d(msg||'navigating…'));setTimeout(function(){PB.closeModal(modal);setTimeout(function(){PB.go(sel);},250);},380);}
 function findProject(arg){
@@ -1522,7 +1524,7 @@ function findProject(arg){
 var CMDS={
   help:{d:'list commands',run:function(){
     var rows=[['about','who I am'],['projects','list the four flagship builds'],['open <n|name>','jump to a project'],
-      ['skills [name]','tech stack, or where one skill was used'],['experience','track record'],['contact','email + links'],
+      ['skills [name]','tech stack, or where one skill was used'],['experience','track record'],['contact','email + links'],['github · linkedin','open my profiles'],
       ['email','copy my email address'],['resume','open my resume (PDF)'],['poll','go vote in the poll'],['ping','leave a coffee-chat note'],
       ['ls · cd <section>','browse like a filesystem'],['sound on|off','retro UI sounds'],['clear · exit','tidy up / close']];
     print(rows.map(function(r){return '  '+c((r[0]+'                ').slice(0,17))+d(r[1]);}).join('\n')+
@@ -1560,12 +1562,14 @@ var CMDS={
     print(EXPERIENCE.map(function(x){return '  '+c(x.period)+'  '+E(x.role)+'\n  '+d('            '+x.org);}).join('\n'));
   }},
   contact:{d:'',run:function(){
-    print('  email     '+c(EMAIL)+'  '+lnk('copy','email')+'\n  github    '+d('github.com/«your-handle»')+'\n  linkedin  '+d('linkedin.com/in/«your-handle»')+'\n\n  '+lnk('→ go to contact','cd contact'));
+    print('  email     '+c(EMAIL)+'  '+lnk('copy','email')+'\n  github    '+ext('github.com/Badhan2440',GITHUB)+'\n  linkedin  '+ext('linkedin.com/in/badhan-paul',LINKEDIN)+'\n\n  '+lnk('→ go to contact','cd contact'));
   }},
   resume:{d:'',run:function(){
     var a=doc.querySelector('[data-resume]'),href=a?a.href:'resume.pdf';
     print(d('opening resume in a new tab…'));if(a)a.click();else window.open(href,'_blank','noopener');
   }},
+  github:{d:'',run:function(){print(d('opening ')+ext('github.com/Badhan2440',GITHUB)+d(' in a new tab…'));window.open(GITHUB,'_blank','noopener,noreferrer');}},
+  linkedin:{d:'',run:function(){print(d('opening ')+ext('linkedin.com/in/badhan-paul',LINKEDIN)+d(' in a new tab…'));window.open(LINKEDIN,'_blank','noopener,noreferrer');}},
   email:{d:'',run:function(){
     var ok=function(){print(d('copied ')+c(EMAIL)+d(' to clipboard'));PB.sfx('select');};
     try{navigator.clipboard.writeText(EMAIL).then(ok,function(){print('email: '+c(EMAIL));});}catch(e){print('email: '+c(EMAIL));}
