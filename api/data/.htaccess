@@ -1,0 +1,6 @@
+# Keep the poll/ping data file private. Only connect.php reads it.
+Require all denied
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>
